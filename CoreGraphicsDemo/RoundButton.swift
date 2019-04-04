@@ -10,7 +10,7 @@ import UIKit
 
 
 @IBDesignable
-class PlusButton: UIButton {
+class RoundButton: UIButton {
     
     private struct Constants {
         static let plusLineWidth: CGFloat = 3.0

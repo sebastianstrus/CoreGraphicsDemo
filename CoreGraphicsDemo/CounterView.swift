@@ -21,15 +21,17 @@ class CounterView: UIView {
         }
     }
     
-    @IBInspectable var counter: Int = 5
-    @IBInspectable var outlineColor: UIColor = UIColor(red: 34 / 255,
-                                                       green: 110 / 255,
-                                                       blue: 100 / 255,
-                                                       alpha: 1.0)
-    @IBInspectable var counterColor: UIColor = UIColor(red: 87 / 255,
-                                                       green: 218 / 255,
-                                                       blue: 213 / 255,
-                                                       alpha: 1.0)
+    @IBInspectable var counter: Int = 3 {
+        didSet {
+            if counter <=  Constants.numberOfGlasses {
+                //the view needs to be refreshed
+                setNeedsDisplay()
+            }
+        }
+    }
+    
+    @IBInspectable var outlineColor: UIColor = UIColor(r: 120, g: 0, b: 0)
+    @IBInspectable var counterColor: UIColor = UIColor(r: 200, g: 70, b: 70)
     
     override func draw(_ rect: CGRect) {
         // 1
@@ -71,7 +73,7 @@ class CounterView: UIView {
         //then calculate the arc for each single glass
         let arcLengthPerGlass = angleDifference / CGFloat(Constants.numberOfGlasses)
         //then multiply out by the actual glasses drunk
-        let outlineEndAngle = arcLengthPerGlass * CGFloat(5) + startAngle
+        let outlineEndAngle = arcLengthPerGlass * CGFloat(counter) + startAngle
         
         //2 - draw the outer arc
         let outlinePath = UIBezierPath(arcCenter: center,
@@ -93,6 +95,41 @@ class CounterView: UIView {
         outlineColor.setStroke()
         outlinePath.lineWidth = Constants.lineWidth
         outlinePath.stroke()
+        
+        
+        //Counter View markers
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //1 - save original state
+        context.saveGState()
+        outlineColor.setFill()
+        
+        let markerWidth: CGFloat = 5.0
+        let markerSize: CGFloat = 10.0
+        
+        //2 - the marker rectangle positioned at the top left
+        let markerPath = UIBezierPath(rect: CGRect(x: -markerWidth / 2, y: 0, width: markerWidth, height: markerSize))
+        
+        //3 - move top left of context to the previous center position
+        context.translateBy(x: rect.width / 2, y: rect.height / 2)
+        
+        for i in 1...Constants.numberOfGlasses {
+            //4 - save the centred context
+            context.saveGState()
+            //5 - calculate the rotation angle
+            let angle = arcLengthPerGlass * CGFloat(i) + startAngle - .pi / 2
+            //rotate and translate
+            context.rotate(by: angle)
+            context.translateBy(x: 0, y: rect.height / 2 - markerSize)
+            
+            //6 - fill the marker rectangle
+            markerPath.fill()
+            //7 - restore the centred context for the next rotate
+            context.restoreGState()
+        }
+        
+        //8 - restore the original state in case of more painting
+        context.restoreGState()
     }
 
 }
