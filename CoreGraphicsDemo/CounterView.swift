@@ -30,7 +30,7 @@ class CounterView: UIView {
         }
     }
     
-    @IBInspectable var outlineColor: UIColor = UIColor(r: 120, g: 0, b: 0)
+    @IBInspectable var outlineColor: UIColor = UIColor(r: 230, g: 230, b: 230)
     @IBInspectable var counterColor: UIColor = UIColor(r: 200, g: 70, b: 70)
     
     override func draw(_ rect: CGRect) {

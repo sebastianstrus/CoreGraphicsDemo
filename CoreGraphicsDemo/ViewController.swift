@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var isGraphViewShowing = false
     
     let label1: UILabel = {
         let label = UILabel()
@@ -104,37 +103,37 @@ class ViewController: UIViewController {
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
     
-        view.backgroundColor = UIColor(r: 122, g: 198, b: 255)
-        containerView.setAnchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: nil, paddingTop: 80, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 300, height: 250)
+        view.backgroundColor = UIColor(r: 20, g: 20, b: 20)
+        containerView.setAnchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: nil, paddingTop: 80, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 300, height: 550)
         containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         counterView.backgroundColor = .clear
         
         counterView.setAnchor(width: 230, height: 230)
         counterView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        counterView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        counterView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor,constant: 140).isActive = true
         
         graphView.setAnchor(width: 300, height: 250)
         graphView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        graphView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        graphView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: -150).isActive = true
         
         
         
  
         plusButton.setAnchor(width: 100, height: 100)
         plusButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -60).isActive = true
-        plusButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100).isActive = true
+        plusButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 260).isActive = true
         
 
         minusButton.setAnchor(width: 100, height: 100)
         minusButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 60).isActive = true
-        minusButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100).isActive = true
+        minusButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 260).isActive = true
         
         counterLabel.setAnchor(width: 64, height: 64)
         counterLabel.centerXAnchor.constraint(equalTo: counterView.centerXAnchor).isActive = true
         counterLabel.centerYAnchor.constraint(equalTo: counterView.centerYAnchor).isActive = true
         counterLabel.text = String(counterView.counter)
-        counterLabel.textColor = UIColor(r: 120, g: 0, b: 0)
+        counterLabel.textColor = UIColor.white//(r: 120, g: 0, b: 0)
         
         waterDrunkLabel.setAnchor(top: graphView.topAnchor,
                                     leading: graphView.leadingAnchor,
@@ -207,26 +206,7 @@ class ViewController: UIViewController {
     }
     
 
-    @IBAction func counterViewTap(_ gesture: UITapGestureRecognizer?) {
-        print("counterViewTap")
-        if (isGraphViewShowing) {
-            //hide Graph
-            UIView.transition(from: graphView,
-                              to: counterView,
-                              duration: 1.0,
-                              options: [.transitionFlipFromLeft, .showHideTransitionViews],
-                              completion:nil)
-        } else {
-            //show Graph
-            setupGraphDisplay()
-            UIView.transition(from: counterView,
-                              to: graphView,
-                              duration: 1.0,
-                              options: [.transitionFlipFromRight, .showHideTransitionViews],
-                              completion: nil)
-        }
-        isGraphViewShowing = !isGraphViewShowing
-    }
+
     
     @IBAction func roundButtonPressed(_ button: RoundButton) {
         if button.isAddButton {
@@ -240,9 +220,10 @@ class ViewController: UIViewController {
         }
         counterLabel.text = String(counterView.counter)
         
-        if isGraphViewShowing {
-            counterViewTap(nil)
-        }
+
+        
+        // test
+        setupGraphDisplay()
     }
     
     func setupGraphDisplay() {

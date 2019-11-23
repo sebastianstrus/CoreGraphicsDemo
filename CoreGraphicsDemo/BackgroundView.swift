@@ -10,7 +10,7 @@ import UIKit
 
 @IBDesignable
 class BackgroundView: UIView {
-    
+    /*
     //1
     @IBInspectable var lightColor: UIColor = UIColor.orange
     @IBInspectable var darkColor: UIColor = UIColor.yellow
@@ -65,5 +65,5 @@ class BackgroundView: UIView {
         
         UIColor(patternImage: image).setFill()
         context.fill(rect)
-    }
+    }*/
 }
